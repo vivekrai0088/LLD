@@ -3,6 +3,7 @@ package com.vivek.services;
 import com.vivek.exceptions.GameNotFoundException;
 import com.vivek.exceptions.InvalidStateException;
 import com.vivek.exceptions.PlayerLimitReachedException;
+import com.vivek.managers.MoveManager;
 import com.vivek.models.Board;
 import com.vivek.models.Cell;
 import com.vivek.models.CellType;
@@ -15,11 +16,13 @@ import java.util.List;
 
 public class GameService {
   private GameRepository gameRepository;
+  private MoveManager moveManager;
   private RollDiceStrategy rollDiceStrategy;
 
 
-  public GameService(GameRepository gameRepository, RollDiceStrategy rollDiceStrategy) {
+  public GameService(GameRepository gameRepository, MoveManager moveManager, RollDiceStrategy rollDiceStrategy) {
     this.gameRepository = gameRepository;
+    this.moveManager = moveManager;
     this.rollDiceStrategy = rollDiceStrategy;
   }
 
@@ -57,38 +60,20 @@ public class GameService {
     game.resetPlayersToken();
     game.start();
 
-    Player currentPlayer = game.getCurrentPlayerTurn();
-    int playerIndex = 0;
     while(true) {
+      Player currentPlayer = game.getCurrentPlayerTurn();
       System.out.println("Current player " + currentPlayer.getName() + " rolling dice");
       int tokens = rollDiceStrategy.rollDice();
       System.out.println("Current player " + currentPlayer.getName() + " get tokens = " + tokens);
-      makeMove(currentPlayer, game, tokens);
+      moveManager.makeMove(currentPlayer, game, tokens);
+      if(currentPlayer.getTokens() == 100) {
+        game.finish();
+      }
       if(game.isFinished()) {
         System.out.println("Announce Winner ");
         System.out.println("Player Won = " + currentPlayer.getName());
         break;
       }
-      currentPlayer = game.getJoinedPlayers().get((playerIndex + 1) % 4);
-      playerIndex++;
-    }
-  }
-
-  private void makeMove(Player currentPlayer, Game game, int tokens) {
-    int targetTokens = Math.min(100, currentPlayer.getTokens() + tokens);
-    System.out.println("target tokens = " + targetTokens);
-    Cell cell = game.getBoard().getCells().get(targetTokens - 1);
-    if(cell.getCellType().equals(CellType.SNAKE_HEAD)) {
-      targetTokens = cell.getSnakeTail();
-      System.out.println("Found Snake head, updated target tokens = " + targetTokens);
-    }
-    if(cell.getCellType().equals(CellType.LADDER_HEAD)) {
-      targetTokens = cell.getLadderTop();
-      System.out.println("Found ladder head, updated target tokens = " + targetTokens);
-    }
-    currentPlayer.updateToken(targetTokens);
-    if(currentPlayer.getTokens() == 100) {
-      game.finish();
     }
   }
 

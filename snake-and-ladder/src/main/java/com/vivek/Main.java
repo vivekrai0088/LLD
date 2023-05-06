@@ -1,6 +1,7 @@
 package com.vivek;
 
 import com.vivek.controllers.GameController;
+import com.vivek.managers.MoveManager;
 import com.vivek.models.Board;
 import com.vivek.models.Ladder;
 import com.vivek.models.Player;
@@ -17,7 +18,8 @@ public class Main {
   public static void main(String[] args) {
     GameRepository gameRepository = new GameRepository();
     RollDiceStrategy rollDiceStrategy = new OneRollDiceStrategy();
-    GameService gameService = new GameService(gameRepository, rollDiceStrategy);
+    MoveManager moveManager = new MoveManager();
+    GameService gameService = new GameService(gameRepository,moveManager, rollDiceStrategy);
     GameController gameController = new GameController(gameService);
 
 

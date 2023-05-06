@@ -26,6 +26,9 @@ public class Game {
     this.maxPlayers = maxPlayers;
   }
 
+  public void setCurrentPlayerTurn(Player currentPlayerTurn) {
+      this.currentPlayerTurn = currentPlayerTurn;
+  }
 
   public void joinPlayer(Player player) {
     joinedPlayers.add(player);
