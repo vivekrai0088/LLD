@@ -2,7 +2,7 @@ package com.vivek.services;
 
 import com.vivek.exceptions.GameNotFoundException;
 import com.vivek.exceptions.InvalidStateException;
-import com.vivek.exceptions.PlayerReachedException;
+import com.vivek.exceptions.PlayerLimitReachedException;
 import com.vivek.models.Board;
 import com.vivek.models.Cell;
 import com.vivek.models.CellType;
@@ -11,9 +11,7 @@ import com.vivek.models.Player;
 import com.vivek.repositories.GameRepository;
 import com.vivek.strategy.RollDiceStrategy;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class GameService {
   private GameRepository gameRepository;
@@ -38,7 +36,7 @@ public class GameService {
     Game game = gameRepository.getGame(gameCode);
     List<Player> alreadyJoinedPlayers = game.getJoinedPlayers();
     if(alreadyJoinedPlayers.size() == game.getMaxPlayers()) {
-        throw new PlayerReachedException("Unable to join the game, players limit reached");
+        throw new PlayerLimitReachedException("Unable to join the game, players limit reached");
     }
 
     for(int i = 0; i < alreadyJoinedPlayers.size(); i++) {
