@@ -2,21 +2,10 @@ package com.vivek.repositories;
 
 import com.vivek.models.Game;
 
-import java.util.HashMap;
-import java.util.Map;
+public interface GameRepository {
 
-public class GameRepository {
-  private Map<String, Game> games;
+  Game getGame(String gameCode);
 
-  public GameRepository() {
-    games = new HashMap<>();
-  }
+  void addGame(Game game);
 
-  public Game getGame(String gameCode) {
-    return games.get(gameCode);
-  }
-
-  public void addGame(Game game) {
-    games.put(game.getGameCode(), game);
-  }
 }

@@ -9,9 +9,13 @@ import java.util.List;
 @Getter
 public class Board {
   private List<Cell> cells;
+  private List<Snake> snakes;
+  private List<Ladder> ladders;
 
   public Board(List<Snake> snakes, List<Ladder> ladders) {
     cells = new ArrayList<>();
+    this.snakes = snakes;
+    this.ladders = ladders;
     for(int i = 0; i < 100; i++) {
       cells.add(new Cell.CellBuilder().
               number(i).

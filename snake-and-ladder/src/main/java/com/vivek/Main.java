@@ -2,12 +2,15 @@ package com.vivek;
 
 import com.vivek.controllers.GameController;
 import com.vivek.managers.MoveManager;
+import com.vivek.managers.SnakeAndLadderMoveManager;
 import com.vivek.models.Board;
 import com.vivek.models.Ladder;
 import com.vivek.models.Player;
 import com.vivek.models.Snake;
 import com.vivek.repositories.GameRepository;
+import com.vivek.repositories.InMemoryGameRepository;
 import com.vivek.services.GameService;
+import com.vivek.services.SnakeAndLadderGameService;
 import com.vivek.strategy.OneRollDiceStrategy;
 import com.vivek.strategy.RollDiceStrategy;
 
@@ -16,10 +19,10 @@ import java.util.List;
 
 public class Main {
   public static void main(String[] args) {
-    GameRepository gameRepository = new GameRepository();
+    GameRepository gameRepository = new InMemoryGameRepository();
     RollDiceStrategy rollDiceStrategy = new OneRollDiceStrategy();
-    MoveManager moveManager = new MoveManager();
-    GameService gameService = new GameService(gameRepository,moveManager, rollDiceStrategy);
+    MoveManager moveManager = new SnakeAndLadderMoveManager();
+    GameService gameService = new SnakeAndLadderGameService(gameRepository, moveManager, rollDiceStrategy);
     GameController gameController = new GameController(gameService);
 
 
