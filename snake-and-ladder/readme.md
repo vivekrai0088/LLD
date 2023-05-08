@@ -1,0 +1,1 @@
+Class Diagram Link: https://viewer.diagrams.net/?tags=%7B%7D&highlight=0000ff&edit=_blank&layers=1&nav=1&title=Untitled%20Diagram.drawio#Uhttps%3A%2F%2Fraw.githubusercontent.com%2Fvivekrai0088%2FLLD%2Fmain%2Fsnake-and-ladder%2Fsrc%2Fmain%2Fjava%2Fcom%2Fvivek%2FUntitled%2520Diagram.drawio
