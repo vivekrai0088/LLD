@@ -1,6 +1,5 @@
 package data.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
@@ -23,6 +22,4 @@ public class User {
 
   @Enumerated(EnumType.STRING)
   private UserStatus status;
-
-  // Constructors, getters, and setters
 }
